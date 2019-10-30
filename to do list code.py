@@ -1,6 +1,9 @@
 import sys
-
+import tkinter
 todolist = []
+root = tkinter.Tk()
+
+
 
 def menu():
     print("choose your option.")
@@ -17,7 +20,7 @@ def menu():
     else:
         print("Invalid selection.")
         
-    
+    #fix file not read.
     
     
     
@@ -50,8 +53,11 @@ def delete():
     menu()
     
 def show_list():
+    listbox.delete(0,"end")
+    load_data()
+    print(todolist)
     for i in range(len(todolist)):
-        print(str(i+1) + ":"+ todolist[i][0]+" Due: "+ todolist[i][1])
+        listbox.insert(tkinter.END, str(i+1) + ":"+ todolist[i][0]+" Due: "+ todolist[i][1])
         
         
 
@@ -95,10 +101,32 @@ def load_data():
         
     except:
         print ("File not read")
-def quit():
-    sys.exit()
+def quitme():
+    root.destroy()
 
-load_data()
-menu()
+myfont = "arial 14 bold"
+#make controlls
+#place controlls on screen
+title = tkinter.Label(root, text="Get This Stuff Done!", font ="Arial 20 bold")
+title.grid(row=0, column=0, columnspan=3)
+addbtn = tkinter.Button(root, text="Add", font=myfont)
+addbtn.grid(row=2, column=2, rowspan=2)
+quitbtn = tkinter.Button(root, text="Quit", font=myfont, command=quitme) 
+quitbtn.grid(row=4, column=2, rowspan=2)
+delbtn = tkinter.Button(root, text="Delete", font=myfont) 
+delbtn.grid(row=4, column=1, rowspan=2)
+itembox = tkinter.Entry(root)
+itembox.grid(row=2, column=1)
+databox = tkinter.Entry(root)
+databox.grid(row=3, column=1)
+itemLabel = tkinter.Label(root, text= "new item", font=myfont)
+itemLabel.grid(row=2, column=0)
+dataLabel = tkinter.Label(root, text= "Due Date", font=myfont)
+dataLabel.grid(row=3, column=0)
+listbox = tkinter.Listbox(root, width=40, height=20)
+listbox.grid(row=1, column=0, columnspan=3)
+show_list()
+root.mainloop()
+
 
     
